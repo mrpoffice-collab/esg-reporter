@@ -1,0 +1,98 @@
+// ESG Reporter - Sustainability tracking for SMBs
+// Database: Neon PostgreSQL
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Company profile
+model Company {
+  id          String   @id @default(cuid())
+  name        String
+  industry    String?
+  size        String?  // small, medium
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  emissions   Emission[]
+  waterUsage  WaterUsage[]
+  wasteData   WasteData[]
+  reports     Report[]
+}
+
+// Carbon emissions tracking
+model Emission {
+  id          String   @id @default(cuid())
+  companyId   String
+  company     Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  date        DateTime @default(now())
+  category    String   // electricity, fuel, travel, shipping
+  amount      Float    // in kg CO2e
+  description String?
+
+  createdAt   DateTime @default(now())
+
+  @@index([companyId])
+  @@index([date])
+}
+
+// Water usage tracking
+model WaterUsage {
+  id          String   @id @default(cuid())
+  companyId   String
+  company     Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  date        DateTime @default(now())
+  category    String   // operations, facilities, irrigation
+  amount      Float    // in liters
+  description String?
+
+  createdAt   DateTime @default(now())
+
+  @@index([companyId])
+  @@index([date])
+}
+
+// Waste metrics
+model WasteData {
+  id          String   @id @default(cuid())
+  companyId   String
+  company     Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  date        DateTime @default(now())
+  category    String   // landfill, recycled, composted, hazardous
+  amount      Float    // in kg
+  description String?
+
+  createdAt   DateTime @default(now())
+
+  @@index([companyId])
+  @@index([date])
+}
+
+// Generated reports
+model Report {
+  id          String   @id @default(cuid())
+  companyId   String
+  company     Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  period      String   // Q1 2025, 2025, etc.
+  type        String   // monthly, quarterly, annual
+
+  // Summary stats at time of generation
+  totalEmissions  Float?
+  totalWater      Float?
+  totalWaste      Float?
+
+  createdAt   DateTime @default(now())
+
+  @@index([companyId])
+}
