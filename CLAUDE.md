@@ -6,13 +6,17 @@ Lightweight sustainability tracking for SMBs. Track carbon emissions, water usag
 
 | # | Criterion | Status |
 |---|-----------|--------|
-| 1 | User can create company profile | Pending |
-| 2 | User can log carbon emissions | Pending |
-| 3 | User can log water usage | Pending |
-| 4 | User can log waste metrics | Pending |
-| 5 | Dashboard shows summary stats | Pending |
-| 6 | User can generate report | Pending |
-| 7 | Data persists after refresh | Pending |
+| 1 | User can create company profile | ✅ Complete |
+| 2 | User can log carbon emissions | ✅ Complete |
+| 3 | User can log water usage | ✅ Complete |
+| 4 | User can log waste metrics | ✅ Complete |
+| 5 | Dashboard shows summary stats | ✅ Complete |
+| 6 | User can generate report | ✅ Complete |
+| 7 | Data persists after refresh | ✅ Complete |
+
+**MVP Achieved**: December 26, 2025
+**Live URL**: https://esg-reporter.vercel.app/
+**GitHub**: https://github.com/mrpoffice-collab/esg-reporter
 
 ## Design Rules (WCAG Compliant)
 
